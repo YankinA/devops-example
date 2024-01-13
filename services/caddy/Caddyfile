@@ -1,4 +1,4 @@
-localhost, devops-example.test {
+localhost, devops-example.test, www.hn1.site, hn1.site {
 	tls internal
 
 	handle /images/* {
@@ -13,4 +13,17 @@ localhost, devops-example.test {
 	log {
 		# format single_field common_log
 	}
+
+	reverse_proxy {
+      to app:3000
+
+      @error status 502 # Только 502 ошибки
+      handle_response @error {
+        # Путь по которому хранятся html-файлы для разных ошибок
+        root * /app/services/caddy/error_pages
+        # Для всех 502 запросов отдаем файл 502.html
+        rewrite * /502.html
+        file_server
+      }
+    }
 }

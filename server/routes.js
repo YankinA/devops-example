@@ -7,6 +7,6 @@ export default (app) => {
     reply.view('index', { serverMessage });
   });
   app.get('/error', { name: 'error' }, () => {
-    throw new Error('Oops! Something went wrong!');
+    throw new Error('Oops! Something went wrong!!!');
   });
 };
